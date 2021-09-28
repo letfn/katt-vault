@@ -7,10 +7,10 @@ main.yaml: clean/main.yaml
 	kustomize build clean >$@
 
 clean/main.yaml: clean/values.yaml
-	-helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+	-helm repo add hashicorp https://helm.releases.hashicorp.com
 	helm repo update
-	helm template external-secrets external-secrets/kubernetes-external-secrets \
-		--version 8.3.0 --namespace=external-secrets --values=clean/values.yaml --include-crds --kube-version 1.21 >$@
+	helm template vault hashicorp/vault \
+		--version 0.16.0 --namespace=vault --values=clean/values.yaml --include-crds --kube-version 1.21 >$@
 
 .PHONY: clean
 clean:
